@@ -1221,11 +1221,9 @@
     video.addEventListener('loadeddata', showVideo, { once: true });
     video.addEventListener('canplay', showVideo, { once: true });
 
-    setTimeout(function () {
-      if (video.readyState === 0 && video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
-        showFallback();
-      }
-    }, 1200);
+    // Do not use a short timeout here: Vercel Blob videos can take longer
+    // to start downloading, especially on the first request. The error
+    // handler above is the reliable signal for an unavailable video.
   });
 
   // Reliable smooth-scroll for all in-page links, including every Book a demo button.
